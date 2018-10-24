@@ -10,7 +10,7 @@ char q[]="?DCLXVI"; // that's my moms maiden name i guess now you can hack into 
 
 int chxiv(char* c, char* out) { // okay so this converts a string into roman numerals based on the numeric values of the characters until it runs into a newline or null
   int b = 0;
-  for(;*c && *c!='\n';c++, out[b++]=' ')
+  for(;*c && *c-13 && *c-'\n';c++, out[b++]=' ')
     for(char i=1,a=100,t=*c; t && a; t%=a, a/=10, i+=2) {
       if(t>=a*9) {
 	out[b++] = q[i+1];
@@ -37,7 +37,7 @@ int main() {
     close(myfile);
     puts(mine);
     char* new = malloc(16000), *i = new; // 8000 is my atm pin dont tell anybody
-    for (;*mine; *i++ = *mine++) // yeah so basically we're parsing all the commentds and converting them into roman numerals (/*...*/'s are safe though)
+    for (;*mine;*i++=*mine++) // yeah so basically we're parsing all the commentds and converting them into roman numerals (/*...*/'s are safe though)
       if (i - new > 1 && *(mine-1) == '/' && *(mine-2) == '/') {
         i += chxiv(mine, i);
 	for (;*mine && *mine != '\n'; mine++);
