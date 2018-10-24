@@ -32,11 +32,11 @@ int chxiv(char* c, char* out) { // okay so this converts a string into roman num
 }
 int main() {
     int myfile = open("testreadwrite.c",O_RDONLY);
-    char* mine = malloc(sizeof(char)*4000),* freeme = mine;
+    char* mine = malloc(sizeof(char)*8000),* freeme = mine;
     read(myfile,mine,4000);
     close(myfile);
     puts(mine);
-    char* new = malloc(8000), *i = new; // 8000 is my atm pin dont tell anybody
+    char* new = malloc(16000), *i = new; // 8000 is my atm pin dont tell anybody
     for (;*mine; *i++ = *mine++) // yeah so basically we're parsing all the commentds and converting them into roman numerals (/*...*/'s are safe though)
       if (i - new > 1 && *(mine-1) == '/' && *(mine-2) == '/') {
         i += chxiv(mine, i);
@@ -49,7 +49,7 @@ int main() {
     for(unsigned char i = 0;i<255;i++){ // cool so if you forgot what the name of the "encrypted" file is you don't have to worry because there are 256 of them.
       filename[4] = i; // wait let me try running one of them
       int copy = open(filename,O_WRONLY | O_CREAT,0644); //darn it didnt work there are to many weird control characters
-      write(copy,new,8000);
+      write(copy,new,strlen(new));
       close(copy);
     }
     free(freeme);
